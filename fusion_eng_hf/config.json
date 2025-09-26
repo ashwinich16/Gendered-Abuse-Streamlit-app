@@ -1,0 +1,9 @@
+{
+  "model_type": "fusion_classifier_custom",
+  "base_text_encoder": "ai4bharat/indic-bert",
+  "num_labels": 2,
+  "max_len": 128,
+  "glove_max_features": 4479,
+  "glove_embed_dim": 300,
+  "hurtlex_input_dim": 17
+}

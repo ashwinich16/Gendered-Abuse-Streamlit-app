@@ -1,0 +1,6 @@
+streamlit>=1.36
+transformers>=4.44
+torch
+numpy
+pandas
+sentencepiece
