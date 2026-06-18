@@ -10,7 +10,8 @@ from typing import Dict, List
 st.set_page_config(page_title="Gendered Abuse Detection (English)", page_icon="✅")
 # ---------- Paths ----------
 MODEL_DIR = "fusion_eng_hf" 
-HF_Token = st.secrets["HF_Token"]
+BERT_MODEL_NAME = "ai4bharat/indic-bert"
+HF_TOKEN = st.secrets["HF_Token"]
 
 # ---------- Utils ----------
 def normalize_text(text: str) -> str:
@@ -72,9 +73,9 @@ class BiLSTMEncoder(nn.Module):
         return self.dropout(x)
 
 class IndicBERTEncoder(nn.Module):
-    def __init__(self, model_name):
+    def __init__(self, model_name, hf_token):
         super().__init__()
-        self.bert = AutoModel.from_pretrained(model_name)
+        self.bert = AutoModel.from_pretrained(model_name, token=hf_token)
         self.linear = nn.Linear(self.bert.config.hidden_size, 128)
         self.dropout = nn.Dropout(0.2)
 
@@ -87,7 +88,7 @@ class IndicBERTEncoder(nn.Module):
 class FusionClassifier(nn.Module):
     def __init__(self, embedding_matrix: np.ndarray, hurtlex_input_dim: int):
         super().__init__()
-        self.bert_encoder = IndicBERTEncoder(MODEL_DIR)
+        self.bert_encoder = IndicBERTEncoder(BERT_MODEL_NAME, HF_TOKEN)
         self.bilstm_encoder = BiLSTMEncoder(embedding_matrix)
         self.hurtlex_fc = nn.Sequential(
             nn.Linear(hurtlex_input_dim, 64),
@@ -118,7 +119,8 @@ def load_artifacts():
         cfg = json.load(f)
 
     # tokenizer for BERT branch
-    hf_tok = AutoTokenizer.from_pretrained(MODEL_DIR)  # uses files in folder
+    hf_tok = AutoTokenizer.from_pretrained(BERT_MODEL_NAME,
+    token=HF_TOKEN)
 
     # embedding matrix for BiLSTM
     emb = np.load(os.path.join(MODEL_DIR, "embedding_matrix.npy"))
