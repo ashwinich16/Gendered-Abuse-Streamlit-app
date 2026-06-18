@@ -91,7 +91,7 @@ class IndicBERTEncoder(nn.Module):
 class FusionClassifier(nn.Module):
     def __init__(self, embedding_matrix: np.ndarray, hurtlex_input_dim: int):
         super().__init__()
-        self.bert_encoder = IndicBERTEncoder(BERT_MODEL_NAME, HF_TOKEN)
+        self.bert_encoder = IndicBERTEncoder(BERT_MODEL_NAME, os.environ["HF_TOKEN"])
         self.bilstm_encoder = BiLSTMEncoder(embedding_matrix)
         self.hurtlex_fc = nn.Sequential(
             nn.Linear(hurtlex_input_dim, 64),
