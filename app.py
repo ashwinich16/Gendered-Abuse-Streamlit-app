@@ -74,7 +74,7 @@ class BiLSTMEncoder(nn.Module):
 class IndicBERTEncoder(nn.Module):
     def __init__(self, model_name):
         super().__init__()
-        self.bert = AutoModel.from_pretrained(MODEL_DIR)
+        self.bert = AutoModel.from_pretrained(model_name)
         self.linear = nn.Linear(self.bert.config.hidden_size, 128)
         self.dropout = nn.Dropout(0.2)
 
@@ -87,7 +87,7 @@ class IndicBERTEncoder(nn.Module):
 class FusionClassifier(nn.Module):
     def __init__(self, embedding_matrix: np.ndarray, hurtlex_input_dim: int):
         super().__init__()
-        self.bert_encoder = IndicBERTEncoder()
+        self.bert_encoder = IndicBERTEncoder(MODEL_DIR)
         self.bilstm_encoder = BiLSTMEncoder(embedding_matrix)
         self.hurtlex_fc = nn.Sequential(
             nn.Linear(hurtlex_input_dim, 64),
