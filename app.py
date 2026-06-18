@@ -143,7 +143,7 @@ cfg, hf_tok, emb, cat2idx, word_index, hurtlex_dict, model = load_artifacts()
 
 # ---------- Streamlit UI ----------
 
-st.title("Gendered Abuse Detection — English")
+st.title("Gendered Abuse Detection — English(this is only for english language)")
 st.caption("Custom Fusion: IndicBERT + BiLSTM (GloVe) + HurtLex")
 st.caption("example Tweets - R u a female or some other gender?  I don't understand ! Being a woman you choose to be judge of show besides ???  U r not a woman #metoo #Shame on you - Hate")
 st.caption("Only an idiot would say are you from Muslim - Gujarat is a place to be from - Muslim is a denotion of the religious following - sorrowful state of affairs for labelling humans as religious entities-funny comparison - Non Hate")
