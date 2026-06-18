@@ -10,7 +10,7 @@ from typing import Dict, List
 st.set_page_config(page_title="Gendered Abuse Detection (English)", page_icon="✅")
 # ---------- Paths ----------
 MODEL_DIR = "fusion_eng_hf" 
-HF_Token = st.secrets("HF_Token")
+HF_Token = st.secrets["HF_Token"]
 
 # ---------- Utils ----------
 def normalize_text(text: str) -> str:
@@ -72,9 +72,9 @@ class BiLSTMEncoder(nn.Module):
         return self.dropout(x)
 
 class IndicBERTEncoder(nn.Module):
-    def __init__(self, model_name="ai4bharat/indic-bert"):
+    def __init__(self, model_name):
         super().__init__()
-        self.bert = AutoModel.from_pretrained(model_name,token = HF_Token)
+        self.bert = AutoModel.from_pretrained(MODEL_DIR)
         self.linear = nn.Linear(self.bert.config.hidden_size, 128)
         self.dropout = nn.Dropout(0.2)
 
