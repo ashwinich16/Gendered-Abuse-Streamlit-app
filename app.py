@@ -9,6 +9,9 @@ from typing import Dict, List
 
 st.set_page_config(page_title="Gendered Abuse Detection (English)", page_icon="✅")
 # ---------- Paths ----------
+os.environ.pop("HF_HUB_OFFLINE", None)
+os.environ.pop("TRANSFORMERS_OFFLINE", None)
+os.environ.pop("HF_DATASETS_OFFLINE", None)
 MODEL_DIR = "fusion_eng_hf" 
 BERT_MODEL_NAME = "ai4bharat/indic-bert"
 os.environ["HF_TOKEN"] = st.secrets["HF_TOKEN"]
