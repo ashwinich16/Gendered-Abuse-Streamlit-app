@@ -9,7 +9,7 @@ from typing import Dict, List
 
 st.set_page_config(page_title="Gendered Abuse Detection (English)", page_icon="✅")
 # ---------- Paths ----------
-MODEL_DIR = "fusion_eng_hf"  # folder you exported from the notebook
+MODEL_DIR = "fusion_eng_hf" 
 HF_Token = st.secrets("HF_Token")
 
 # ---------- Utils ----------
@@ -46,7 +46,7 @@ def build_hurtlex_vec(text: str, hurtlex_dict: Dict[str, List[str]], cat2idx: Di
                 vec[cat2idx[c]] = 1.0
     return vec
 
-# ---------- Model definition (same as your training code) ----------
+# ---------- Model definition (same training code) ----------
 class BiLSTMEncoder(nn.Module):
     def __init__(self, embedding_matrix: np.ndarray):
         super().__init__()
