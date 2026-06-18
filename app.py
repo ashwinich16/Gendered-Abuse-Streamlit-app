@@ -11,7 +11,7 @@ st.set_page_config(page_title="Gendered Abuse Detection (English)", page_icon="â
 # ---------- Paths ----------
 MODEL_DIR = "fusion_eng_hf" 
 BERT_MODEL_NAME = "ai4bharat/indic-bert"
-HF_TOKEN = st.secrets["HF_Token"]
+os.environ["HF_TOKEN"] = st.secrets["HF_TOKEN"]
 
 # ---------- Utils ----------
 def normalize_text(text: str) -> str:
@@ -75,7 +75,7 @@ class BiLSTMEncoder(nn.Module):
 class IndicBERTEncoder(nn.Module):
     def __init__(self, model_name, hf_token):
         super().__init__()
-        self.bert = AutoModel.from_pretrained(model_name, token=hf_token)
+        self.bert = AutoModel.from_pretrained(model_name, token=os.environ["HF_TOKEN"])
         self.linear = nn.Linear(self.bert.config.hidden_size, 128)
         self.dropout = nn.Dropout(0.2)
 
@@ -120,7 +120,7 @@ def load_artifacts():
 
     # tokenizer for BERT branch
     hf_tok = AutoTokenizer.from_pretrained(BERT_MODEL_NAME,
-    token=HF_TOKEN)
+    token=os.environ["HF_TOKEN"])
 
     # embedding matrix for BiLSTM
     emb = np.load(os.path.join(MODEL_DIR, "embedding_matrix.npy"))
